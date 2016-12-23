@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>ProFTPD module mod_pool</title>
+</head>
+
+<body bgcolor=white>
+
+<hr>
+<center>
+<h2><b>ProFTPD module <code>mod_pool</code></b></h2>
+</center>
+<hr><br>
+
+<p>
+The <code>mod_pool</code> module is used to periodically log the status
+of the <em>memory pools</em> used by a ProFTPD session.
+
+<p>
+Installation instructions are discussed <a href="#Installation">here</a>.
+
+<p>
+The most current version of <code>mod_pool</code> can be found at:
+<pre>
+  <a href="https://github.com/Castaglia/proftpd-mod_pool">https://github.com/Castaglia/proftpd-mod_pool</a>
+</pre>
+
+<h2>Author</h2>
+<p>
+Please contact TJ Saunders &lt;tj <i>at</i> castaglia.org&gt; with any
+questions, concerns, or suggestions regarding this module.
+
+<h2>Directives</h2>
+<ul>
+  <li><a href="#PoolEngine">PoolEngine</a>
+  <li><a href="#PoolEvents">PoolEvents</a>
+  <li><a href="#PoolLogs">PoolLogs</a>
+</ul>
+
+<p>
+<hr>
+<h3><a name="PoolEngine">PoolEngine</a></h2>
+<strong>Syntax:</strong> PoolEngine <em>on|off</em><br>
+<strong>Default:</strong> off<br>
+<strong>Context:</strong> server config, <code>&lt;VirtualHost&gt;</code>, <code>&lt;Global&gt;</code><br>
+<strong>Module:</strong> mod_pool<br>
+<strong>Compatibility:</strong> 1.3.6rc2 and later
+
+<p>
+The <code>PoolEngine</code> directive enables or disables the
+<code>mod_pool</code> module.
+
+<p>
+<hr>
+<h3><a name="PoolEvents">PoolEvents</a></h2>
+<strong>Syntax:</strong> PoolEvents <em>event1 ...</em><br>
+<strong>Default:</strong> PoolEvents ALL<br>
+<strong>Context:</strong> server config, <code>&lt;VirtualHost&gt;</code>, <code>&lt;Global&gt;</code><br>
+<strong>Module:</strong> mod_pool<br>
+<strong>Compatibility:</strong> 1.3.6rc2 and later
+
+<p>
+The <code>PoolEvents</code> directive configures which for which <em>events</em>
+the <code>mod_pool</code> module will log the memory pool usage.
+
+<p>
+The supported events are:
+<ul>
+  <li>ALL
+  <li>Directories
+  <li>Downloads
+  <li>Misc
+  <li>Sessions
+  <li>Transfers
+  <li>Uploads
+</ul>
+
+<p>
+<hr>
+<h3><a name="PoolLogs">PoolLogs</a></h2>
+<strong>Syntax:</strong> PoolLogs <em>path</em><br>
+<strong>Default:</strong> None<br>
+<strong>Context:</strong> server config, <code>&lt;VirtualHost&gt;</code>, <code>&lt;Global&gt;</code><br>
+<strong>Module:</strong> mod_pool<br>
+<strong>Compatibility:</strong> 1.3.6rc2 and later
+
+<p>
+The <code>PoolLogs</code> directive ...
+
+<p>
+<hr>
+<h2><a name="Installation">Installation</a></h2>
+To install <code>mod_pool</code>, copy the <code>mod_pool.c</code> file into
+the third-party module area in the proftpd source code:
+<pre>
+  $ cp mod_pool.c <i>proftpd-dir</i>/contrib/
+</pre>
+after unpacking the latest proftpd-1.3.<i>x</i> source code.  For including
+<code>mod_pool</code> as a staticly linked module:
+<pre>
+  $ ./configure --with-modules=mod_pool ...
+</pre>
+Alternatively, <code>mod_pool</code> can be built as a DSO module:
+<pre>
+  $ ./configure --enable-dso --with-shared=mod_pool ...
+</pre>
+Then follow the usual steps:
+<pre>
+  $ make
+  $ make install
+</pre>
+
+<p>
+<hr>
+<h2><a name="Usage">Usage</a></h2>
+
+<p>
+<hr>
+<font size=2><b><i>
+&copy; Copyright 2016 TJ Saunders<br>
+ All Rights Reserved<br>
+</i></b></font>
+<hr>
+
+</body>
+</html>

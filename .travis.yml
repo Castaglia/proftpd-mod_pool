@@ -1,0 +1,33 @@
+env: TRAVIS_CI=true
+language: c
+
+compiler:
+  - gcc
+  - clang
+
+install:
+  - sudo apt-get update -qq
+  # for unit tests
+  - sudo apt-get install -y check
+  # for OpenSSL support
+  - sudo apt-get install -y cppcheck rats
+  # for test code coverage
+  - sudo apt-get install -y lcov
+  - gem install coveralls-lcov
+
+before_script:
+  - cd ${TRAVIS_BUILD_DIR}
+  - lcov --directory . --zerocounters
+
+script:
+  # - find . -type f -name "*.c" -print | grep -v t\/ | xargs cppcheck 2>&1
+  # - find . -type f -name "*.c" -print | grep -v t\/ | xargs rats --language=c
+  - git clone https://github.com/proftpd/proftpd.git
+  - cp mod_pool.c proftpd/contrib/
+  - cd proftpd
+  - ./configure --enable-devel=coverage --enable-dso --enable-tests --with-shared=mod_pool
+  - make
+  # Last, a build with a static module, and run the tests
+  - make clean
+  - ./configure --enable-devel=coverage --enable-tests --with-modules=mod_pool
+  - make

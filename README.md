@@ -3,6 +3,7 @@ proftpd-mod_pool
 
 Status
 ------
+[![Build Status](https://travis-ci.org/Castaglia/proftpd-mod_pool.svg?branch=master)](https://travis-ci.org/Castaglia/proftpd-mod_pool)
 [![License](https://img.shields.io/badge/license-GPL-brightgreen.svg)](https://img.shields.io/badge/license-GPL-brightgreen.svg)
 
 Synopsis

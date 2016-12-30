@@ -480,6 +480,18 @@ MODRET pool_pre_any(cmd_rec *cmd) {
 /* Event listeners
  */
 
+static void pool_data_io_ev(const void *event_data, void *user_data) {
+  const char *event;
+  unsigned int count;
+
+  event = session.curr_cmd;
+  count = get_event_count(event, 0);
+
+  pool_log("-----BEGIN POOLS: MID-%s #%u-----", event, count);
+  pr_pool_debug_memory(pool_log);
+  pool_log("-----END POOLS: MID-%s #%u-----", event, count);
+}
+
 static void pool_exit_ev(const void *event_data, void *user_data) {
   const char *event;
   unsigned int count;
@@ -569,6 +581,14 @@ static int pool_sess_init(void) {
   }
 
   pool_counts = pr_table_alloc(pool_pool, 0);
+
+  if (pool_events & POOL_EVENT_FL_DOWNLOAD) {
+    pr_event_register(&pool_module, "core.data-write", pool_data_io_ev, NULL);
+  }
+
+  if (pool_events & POOL_EVENT_FL_UPLOAD) {
+    pr_event_register(&pool_module, "core.data-read", pool_data_io_ev, NULL);
+  }
 
   if (pool_events & POOL_EVENT_FL_SESSION) {
     const char *event;
